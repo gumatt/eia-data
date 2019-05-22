@@ -1,0 +1,9 @@
+.python-version
+.vscode/
+__pycache__/
+*.pyc
+
+data/
+
+# pytest
+.pytest_cache/
