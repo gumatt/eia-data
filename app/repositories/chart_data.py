@@ -58,6 +58,7 @@ class InMemoryChartDataRepository(object):
     def _refresh_repository(self):
         if len(self.raw_data_urls) > 0:
             for url in self.raw_data_urls:
+                logger.info(f'retrieving data file from {url}')
                 self.data[os.path.basename(url)] = pd.ExcelFile(url)
 
     def get_timeseries_dataframe(self, source, sheet):
