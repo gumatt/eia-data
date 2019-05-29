@@ -167,4 +167,4 @@ class ChartFactory(object):
 
         chart_data = [max_line, min_line, avg_line, prev_line, curr_line]
         chart = go.Figure(data=chart_data, layout=layout)
-        py.plot(chart, filename = chart_specs.get('name', 'ChartX'), auto_open=chart_specs.get('auto_open', False))  
+        return py.plot(chart, filename = chart_specs.get('name', 'ChartX'), auto_open=chart_specs.get('auto_open', False))  
