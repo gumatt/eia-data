@@ -69,7 +69,7 @@ class InMemoryChartDataRepository(object):
             xls = self.data[source]
             logger.debug(f'current ExcelFile is {xls}')
             df = xls.parse(sheet, skiprows=[0,2])
-            logger.debug(f'dataframe for {sheet} is {df}')
+            logger.debug(f'dataframe for {sheet} is {df.head()} ... {df.tail()}')
             # clean up columns
             df.rename(columns={'Sourcekey': 'Date'}, inplace=True)
             if 'Date' in df:
