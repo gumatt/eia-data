@@ -16,8 +16,6 @@ import plotly.graph_objs as go
 from loguru import logger
 
 
-py.sign_in(os.environ['PLOTLY_USERNAME'], os.environ['PLOTLY_KEY'])
-
 class ChartFactory(object):
     def __init__(self, repository=None):
         self.repo = repository
@@ -167,4 +165,5 @@ class ChartFactory(object):
 
         chart_data = [max_line, min_line, avg_line, prev_line, curr_line]
         chart = go.Figure(data=chart_data, layout=layout)
+        py.sign_in(os.environ['PLOTLY_USERNAME'], os.environ['PLOTLY_KEY'])
         return py.plot(chart, filename = chart_specs.get('name', 'ChartX'), auto_open=chart_specs.get('auto_open', False))  
