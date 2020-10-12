@@ -39,19 +39,22 @@ NOTE:  currently there is not automated testing, and quality logic in the deploy
 
 To update the charts that appear in the powerhousetl.com/eia-data section of the Powerhouse website, initiate the eia-charts cloud function (can be triggered with a call to https://us-central1-eia-charts.cloudfunctions.net/eia-charts).  
 
-TODO:  Set up cron triggering for 10:31am and 1:01pm ET Wednesdays; and 11:01am and 1:01pm Thursdays (the Thursday triggers cover the weeks when the EIA data is published on Thursdays -- usually after a 3 day weekend)
-
 To add/modify the charts simply edit the eia_config.py file and push the change to github.
-name:                the name of the chart for (not used in chart rendering)
-title:               html text for chart title (the chart date will be appended to this title when rendered)
-data_file:           the filename of the excel doc with the source data to use for the chart
-data_id:             the column sourcekey (usually row 2 in each source file) identifier for the data to use for the chart
-chart_type:          MultiYearWeeklyDataTrendChart is the only valid value at this point
-num_years:           the number of years to show in the chart
-timeframe_unit:      This is the unit of time used in the legend to describe the max, min and avg lines in a MultiYear chart
-data_scale_factor:   multiplicative factor to apply to the raw data to scale for presentation in the chart
-auto_open:           open the chart in the browser when finished -- set to True for testing; default and production value should be False
-yaxis_name:          title to use on the y-axis in the chart; default is 'Millions'
+
+| config param        | description                                                       |
+| ------------------- | ----------------------------------------------------------------- |
+| name:               | the name of the chart for (not used in chart rendering)           |
+| title:              | html text for chart title (the chart date will be appended to this title when rendered)|
+| data_file:          | the filename of the excel doc with the source data to use for the chart |
+| data_id:            | the column sourcekey (usually row 2 in each source file) identifier for the data to use for the chart |
+| chart_type:         | MultiYearWeeklyDataTrendChart is the only valid value at this point |
+| num_years:          | the number of years to show in the chart |
+| timeframe_unit:     | This is the unit of time used in the legend to describe the max, min and avg lines in a MultiYear chart |
+| data_scale_factor:  | multiplicative factor to apply to the raw data to scale for presentation in the chart |
+| auto_open:          | open the chart in the browser when finished -- set to True for testing; default and production value should be False |
+| yaxis_name:         | title to use on the y-axis in the chart; default is 'Millions' |
+
+
 
 ## Requirements: 
 
@@ -61,3 +64,9 @@ and environment variables used in plotly.sign_on(username, key):
 PLOTLY_USERNAME (plotly account username for authentication)
 PLOTLY_KEY (API Key)
 
+## TODOs
+
+
+|        |                            |
+|------- | -------------------------- |
+| TODO:  | Set up cron triggering for 10:31am and 1:01pm ET Wednesdays; and 11:01am and 1:01pm Thursdays (the Thursday triggers cover the weeks when the EIA data is published on Thursdays -- usually after a 3 day weekend)|

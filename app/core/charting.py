@@ -22,11 +22,12 @@ class ChartFactory(object):
 
     def _get_data(self, source_file, source_sheet, data_id):
         df = self.repo.get_data(source_file, source_sheet)
-        if not df is None:
+        if df is not None:
             # date of last data point is in last row of data columns in EIA source data files
             logger.debug(f'repo.get_data({source_file}, {source_sheet}) = {df.head()}')
             self.chart_date = df.iloc[-1]['Date']
             start_year = self.chart_date.year - self.num_years
+            logger.debug(f'charting from {start_year} to {self.chart_date.year}')
             start_week = 1
             df['offset'] = 0
             df.loc[df['Week'] >= 53, 'offset'] = -1
@@ -35,9 +36,9 @@ class ChartFactory(object):
             df = df.drop(columns=['offset'])
             df = df[['Date', 'Year', 'Week', data_id]].loc[(df['Year'] >= start_year) & (df['Week'] >= start_week)]
             pivoted_data = df.pivot(index='Week', columns='Year', values=data_id)
-            pivoted_data['Avg'] = pivoted_data.mean(axis=1)
-            pivoted_data['Max'] = pivoted_data.max(axis=1)
-            pivoted_data['Min'] = pivoted_data.min(axis=1)
+            pivoted_data['Avg'] = pivoted_data[pivoted_data.columns[:5]].mean(axis=1)
+            pivoted_data['Max'] = pivoted_data[pivoted_data.columns[:5]].max(axis=1)
+            pivoted_data['Min'] = pivoted_data[pivoted_data.columns[:5]].min(axis=1)
             df = pd.DataFrame(pivoted_data.to_records())
             df = df[ df['Week'] <= 52 ]
         return df
