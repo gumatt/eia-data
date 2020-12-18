@@ -4,10 +4,10 @@ plotly_username = os.environ['PLOTLY_USERNAME']
 plotly_api_key = os.environ['PLOTLY_KEY']
 
 source_urls = [
-    'http://ir.eia.gov/wpsr/psw01.xls',
-    'http://ir.eia.gov/wpsr/psw02.xls',
-    'http://www.eia.gov/dnav/pet/hist_xls/W_EPC0_SAX_YCUOK_MBBLw.xls',
-    'http://www.eia.gov/dnav/pet/xls/PET_SUM_SNDW_DCUS_NUS_W.xls'
+    'https://ir.eia.gov/wpsr/psw01.xls',
+    'https://ir.eia.gov/wpsr/psw02.xls',
+    'https://www.eia.gov/dnav/pet/hist_xls/W_EPC0_SAX_YCUOK_MBBLw.xls',
+    'https://www.eia.gov/dnav/pet/xls/PET_SUM_SNDW_DCUS_NUS_W.xls'
 ]
 
 data_directory = './data'
