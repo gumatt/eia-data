@@ -16,6 +16,28 @@ import plotly.graph_objs as go
 from loguru import logger
 
 
+def chart_curr_year(df):
+    """sets current year to previous year when last data point is in the first week of the new year.
+
+    If the last datapoint is for one of the first days of a new year, that week is really the last week of the 
+    previous year, so the curr_year should be the year prior to the year of the last data point.  But should be
+
+    Parameters
+    ----------
+    df : Dataframe
+        raw datafram read in from EIA data spreadsheets
+
+    Returns
+    -------
+    [int]
+        current year 
+    """
+    last_datapoint_date = df.iloc[-1]['Date']
+    if (last_datapoint_date.month == 1) and (last_datapoint_date.day < 7):
+        return last_datapoint_date.year - 1
+    return last_datapoint_date.year
+
+
 class ChartFactory(object):
     def __init__(self, repository=None):
         self.repo = repository
@@ -26,8 +48,9 @@ class ChartFactory(object):
             # date of last data point is in last row of data columns in EIA source data files
             logger.debug(f'repo.get_data({source_file}, {source_sheet}) = {df.head()}')
             self.chart_date = df.iloc[-1]['Date']
-            start_year = self.chart_date.year - self.num_years
-            logger.debug(f'charting from {start_year} to {self.chart_date.year}')
+            self.curr_year = chart_curr_year(df)
+            start_year = self.curr_year - self.num_years
+            logger.debug(f'charting from {start_year} to {self.curr_year}')
             start_week = 1
             df['offset'] = 0
             df.loc[df['Week'] >= 53, 'offset'] = -1
@@ -89,9 +112,9 @@ class ChartFactory(object):
         )
 
         curr_line = go.Scatter(
-            y = self.chart_data[str(self.chart_date.year)],
+            y = self.chart_data[str(self.curr_year)],
             x = self.chart_data['Week'],
-            name = str(self.chart_date.year),
+            name = str(self.curr_year),
             line = {
                 'color' : '#238C2C',
                 'width' : 4
@@ -99,9 +122,9 @@ class ChartFactory(object):
         )
 
         prev_line = go.Scatter(
-            y = self.chart_data[str(self.chart_date.year - 1)],
+            y = self.chart_data[str(self.curr_year - 1)],
             x = self.chart_data['Week'],
-            name = str(self.chart_date.year - 1),
+            name = str(self.curr_year - 1),
             line = {
                 'color' : '#8BAE44',
                 'width' : 4
