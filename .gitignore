@@ -1,5 +1,6 @@
 .env
 
+.sonarlint
 .python-version
 .vscode/
 __pycache__/
