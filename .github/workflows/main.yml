@@ -28,4 +28,9 @@ jobs:
         name: eia-charts-cd
         runtime: python37 
         entry_point: render_charts
+        source_dir: /
+        timeout: 120
+        env_vars:  
+          PLOTLY_KEY=${{ secrets.PLOTLY_KEY }}
+          PLOTLY_USERNAME=${{ secrets.PLOTLY_USERNAME }}
         credentials: ${{ secrets.GCP_SA_KEY }}
